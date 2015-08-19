@@ -7,12 +7,12 @@ Massey University,
 Palmerston North, 
 New Zealand.
 
-1. Letters and memos(Communication)
+ 1. Letters and memos(Communication)
 
 The letter class provide options for signatures, two authors, and to add a phrase, 
 e.g. "Confidential" in red.
 
-2. Presentations based on beamer (Presentation)
+ 2. Presentations based on beamer (Presentation)
 
 The presentation style sheet can be used with both LaTeX and XeLaTeX. 
 
