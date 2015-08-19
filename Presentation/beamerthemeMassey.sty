@@ -1,0 +1,690 @@
+% Massey template colours and definitions
+% Written by J.J. Calitz
+% email: j.calitz@massey.ac.nz
+% May 2015
+%
+% --- CHANGES --- 
+% v0.1a 2015/06/10 corrected block colours
+% v0.2  2015/06/15 corrected running headers
+% v0.3  2015/06/26 added opacity options to background and clipped images
+%                  made header colour option optional
+% v0.4  2015/07/01 Specify logo folder optional with \def\logoFolder{RelativeFolder}
+% v0.5  2015/08/03 Change the masseybrand to not show university logos if not specified
+% v0.6  2015/08/12 Add support for XeLaTeX, giving better fonts for headings
+
+%%----------------------------------------------------
+%% Define these fonts to suit your system!!!!
+%%----------------------------------------------------
+\def\masseyRomanFont{Bitstream Vera Serif}
+\def\masseyMonoFont{Courier}
+\def\masseySansFont{Nimbus Sans L}
+\def\masseyHeadingsFont{Nimbus Sans L}
+%%----------------------------------------------------
+
+\mode<presentation>
+
+% Requirement
+\RequirePackage{color}
+\RequirePackage{graphicx} % Allows including images
+\RequirePackage{tikz}
+%\RequirePackage{xparse}
+\RequirePackage{xargs}
+\RequirePackage{ifthen}
+\RequirePackage{xspace}
+\RequirePackage{relsize}
+\RequirePackage[many]{tcolorbox}
+\tcbuselibrary{skins,listings,breakable}
+\RequirePackage{ifxetex}    
+\ifxetex
+  \usepackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+  \setromanfont{\masseyRomanFont}
+  \setsansfont{\masseySansFont}
+  \setmonofont[Mapping=tex-text]{\masseyRomanFont}
+  \font\headingsfont="\masseyHeadingsFont/B:extend=0.8"
+  \font\subheadingsfont="\masseyHeadingsFont:extend=0.8"
+  \renewcommand*\familydefault{\sfdefault}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[scaled]{helvet}
+  \renewcommand*\familydefault{\sfdefault}
+\fi
+\usepackage[export]{adjustbox}
+% make beamer always use the frametitle template, even if frametitle is empty
+\RequirePackage{etoolbox}
+\patchcmd{\endbeamer@frameslide}{\ifx\beamer@frametitle\@empty}{\iffalse}{}{\errmessage{failed to patch}}
+
+% Define Massey-look files===================================================
+% Logos are defined here for masking code from possible changes in future
+%\pgfdeclareimage[height=2.25ex,width=2.5\baselineskip]{masseyBlueLogo}{MasseyLogoBlue}
+%\pgfdeclareimage[height=2.25ex,width=2.5\baselineskip]{masseyWhiteLogo}{MasseyLogoWhite}
+%\pgfdeclareimage[height=2.25ex,width=2.5\baselineskip]{masseyEngineLogo}{EngineLogoBlue}
+\def\logoFolder{uniLogo}
+\def\mainlogobluefile{\logoFolder/MasseyLogoBlue}
+\def\mainlogobluelettersfile{\logoFolder/MasseyLogoBlueLetters}
+\def\mainlogowhitefile{\logoFolder/MasseyLogoWhite}
+\def\mainlogowhitelettersfile{\logoFolder/MasseyLogoWhiteLetters}
+\def\otherlogobluelettersfile{\logoFolder/EngineLogoBlueLetters}
+\def\otherlogowhitelettersfile{\logoFolder/EngineLogoWhiteLetters}
+\def\masseyBlueBackFile{\logoFolder/masseyBlueCircles}
+\def\masseyWhiteBackFile{\logoFolder/masseyWhiteCircles}
+\def\masseyWhiteCircles{\masseyWhiteBackFile}
+\def\masseyBlueCircles{\masseyBlueBackFile}
+\def\backgroundfilename{\masseyBlueBackFile}
+\def\masseyBannerFile{\logoFolder/YellowBanner}
+\def\backgroundfileopacity{0.3}
+% Colours
+\definecolor{masseyBlue}{RGB}{0,75,141}
+\definecolor{masseyGold}{RGB}{228,160,37}
+\definecolor{masseyBlack}{RGB}{0,0,0}
+\definecolor{masseyWhite}{RGB}{246,247,231}
+\definecolor{masseyRangipo}{RGB}{198,188,137}
+\definecolor{masseyTui}{RGB}{217,94,0}
+\definecolor{masseyPonga}{RGB}{162,173,0}
+\definecolor{masseyRuapehu}{RGB}{164,192,181}
+\definecolor{masseyVolcano}{RGB}{152,50,34}
+\definecolor{masseyKamaka}{RGB}{130,120,111}
+\definecolor{masseyTasman}{RGB}{68,105,125}
+\definecolor{masseyKuku}{RGB}{91,99,52}
+\definecolor{masseyOneone}{RGB}{88,69,40}
+\definecolor{masseyMainText}{RGB}{255,255,255}
+\definecolor{masseymainText}{RGB}{255,255,255}
+\definecolor{masseySubText}{RGB}{255,255,255}
+\definecolor{masseysubText}{RGB}{255,255,255}
+\def\frametitlecolor{masseyWhite}
+\def\blocktitelbackground{masseyBlack!75!masseyWhite}
+\def\blocktiteltextcolour{masseyWhite}
+
+
+
+% Settings
+\newlength\yellowBannerWidth
+\newlength\yellowBannerHeight
+\newlength\minBannerWidth
+\newlength\maxBannerWidth
+\setlength{\minBannerWidth}{110pt}
+\setlength{\maxBannerWidth}{130pt}
+\def\mainlogowidth{70pt}
+\def\otherlogowidth{40pt}
+\newif\if@sub
+\newif\if@bar
+\newif\if@backimg
+\newlength{\skiptop}
+\setlength{\skiptop}{45pt}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true]  
+
+\newcommand{\fullmonthname}{%
+  \relax\ifcase\month\or
+    January\or February\or March\or April\or May\or June\or
+    July\or August\or September\or October\or November\or December\fi}
+\newcommand{\nztoday}{\number\day\space\fullmonthname\space\number\year}
+
+\addtobeamertemplate{titlepage}{}{\def\logoscale{0.1}}
+\newcommand{\suptitle}[1]{\def\mSupplementTitle{#1}}
+\newcommand{\department}[1]{\def\mDepartment{#1}}
+\newcommand{\insertdepartment}{\mDepartment\xspace}
+\newcommand{\contact}[1]{\def\mContact{#1}}
+\newcommand{\insertcontact}{\mContact\xspace}
+\newcommand{\headlinecontent}[2]{
+\ifthenelse{\equal{#1}{}}
+{
+\def\masseyheadl{\null}
+%\setbeamertemplate{headline}{}
+}{
+\def\masseyheadl{#1}
+%\setbeamertemplate{headline}[forusewithmasseytemplate]
+}
+\ifthenelse{\equal{#2}{}}
+{
+\def\masseyheadc{\null}
+%\setbeamertemplate{headline}{}
+}{
+\def\masseyheadc{#2}
+%\setbeamertemplate{headline}[forusewithmasseytemplate]
+}
+\setbeamertemplate{headline}[forusewithmasseytemplate]
+}
+
+
+
+
+% Rewrite the itemize environment ++++++=======================================================
+
+\newcommand\coloreditem[1]{\item[\textcolor{#1}{\usebeamertemplate{itemize \beameritemnestingprefix item}}]}
+
+% from /usr/share/texmf/tex/latex/beamer/base/beamerbaselocalstructure.sty line 153--
+
+%
+%
+% Enumerations
+%
+%
+
+\def\enumerate{%
+  \ifnum\@enumdepth>2\relax\@toodeep
+  \else%
+    \advance\@enumdepth\@ne%
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \advance\@itemdepth\@ne%
+  \fi%
+  \beamer@computepref\@enumdepth% sets \beameritemnestingprefix
+  \edef\beamer@enumtempl{enumerate \beameritemnestingprefix item}%
+  \@ifnextchar[{\beamer@@enum@}{\beamer@enum@}}
+\def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
+\def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
+  \@ifnextchar[{\beamer@@@enum@}{\beamer@enum@}}
+\def\beamer@@@enum@[#1]{% partly copied from enumerate.sty
+  \@enLab{}\let\@enThe\@enQmark
+  \@enloop#1\@enum@
+  \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
+    ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
+  \def\insertenumlabel{\the\@enLab}
+  \def\beamer@enumtempl{enumerate mini template}%
+  \expandafter\let\csname the\@enumctr\endcsname\@enThe
+  \csname c@\@enumctr\endcsname7
+  \expandafter\settowidth
+            \csname leftmargin\romannumeral\@enumdepth\endcsname
+            {\the\@enLab\hspace{\labelsep}}%
+  \beamer@enum@}
+\def\beamer@enum@{%
+  \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+  \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+  %\usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+  \expandafter
+    \list
+      {\usebeamertemplate{\beamer@enumtempl}}
+      {\usecounter\@enumctr%
+        \def\makelabel##1{{\hss\llap{{%
+                \usebeamerfont*{enumerate \beameritemnestingprefix item}%
+                \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}##1}}}}}%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+\def\endenumerate{\ifhmode\unskip\fi\endlist%
+   \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}}
+
+\def\beamer@computepref#1{%
+  \let\beameritemnestingprefix\@empty%
+  \ifcase#1\or\or\def\beameritemnestingprefix{sub}\or\def\beameritemnestingprefix{subsub}\or\@toodeep\fi%
+}
+
+\def\insertenumlabel{\theenumi}
+\def\insertsubenumlabel{\theenumii}
+\def\insertsubsubenumlabel{\theenumiii}
+
+\mode
+<article>
+{
+  \AtBeginDocument{ % Remove any overlay specification
+    \let\beamer@@@enum@\@@enum@
+    \def\@@enum@[{%
+      \@ifnextchar<%
+        {\beamer@@@num@@}
+        {\beamer@@@enum@[}%
+    }
+    \def\beamer@@@num@@<#1>]{%
+      \@ifnextchar[%
+        {\beamer@@@enum@}
+        {\@enum@}%
+    }
+    %\let\beamer@origenumerate=\enumerate
+    %\renewcommand*\enumerate{\beamer@origenumerate}
+  }
+}
+
+
+\renewcommand{\itemize}[1][]{%
+  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
+  \ifnum \@itemdepth >2\relax\@toodeep\else
+    \advance\@itemdepth\@ne
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    %\usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \list
+      {\usebeamertemplate{itemize \beameritemnestingprefix item}}
+      {\def\makelabel##1{%
+          {%
+            \hss\llap{{%
+                \usebeamerfont*{itemize \beameritemnestingprefix item}%
+                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1}}%
+          }%
+        }%
+      }
+  \fi%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+
+% Define new blocks based on tcolorbox===========================================================
+
+\newtcolorbox{mblock}[3][\linewidth]{%
+enhanced jigsaw,opacityback=#2, opacityframe=#2,drop fuzzy shadow, boxrule=0mm, 
+width=#1, title={#3}}
+
+\newcommand{\transparent}[4][\linewidth]{%
+\begin{mblock}[#1]{#2}{#3}
+#4
+\end{mblock}
+}
+
+\newtcolorbox{picblock}[4][\linewidth]{%
+enhanced jigsaw,opacityback=#2, opacityframe=#2,drop fuzzy shadow, boxrule=0mm, 
+width=#1, title={#3},watermark graphics=#4,watermark overzoom=1,watermark opacity=#2}
+
+\newtcolorbox{mexample}[3][\linewidth]{%
+enhanced jigsaw,opacityback=#2, opacityframe=#2,drop fuzzy shadow, boxrule=0mm, 
+width=#1, title={#3}, coltitle=\masseyExampleTitleText, colbacktitle=\masseyExampleTitleBack, 
+colback=\masseyExampleBack}
+
+\newtcolorbox{malert}[3][\linewidth]{%
+enhanced jigsaw,opacityback=#2, opacityframe=#2,drop fuzzy shadow, boxrule=0mm, 
+width=#1, title={#3},coltitle=\masseyAlertTitleText, colbacktitle=\masseyAlertTitleBack,
+colback=\masseyAlertBack}
+
+% Verbatim block
+\newtcblisting[auto counter,number within=section]{mverbatim}[2][]{%
+enhanced, center lower, listing only}
+
+%Software demo 
+\newtcblisting[auto counter,number within=section]{demoright}[2][]{%
+enhanced,center lower, listing only, lefthand width=0.4\textwidth,
+example={#2},#1}
+
+
+
+% Variable block sizes ================================================================
+
+\newenvironment<>{varblock}[3][.9\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{\color{#2}#3}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+\newenvironment<>{vartheorem}[2][.9\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{\color{masseyVolcano}Theorem(#2)}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+\newenvironment<>{varexample}[2][.9\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{\color{masseyVolcano}Example(#2)}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+
+% Backgrounds and Colours
+
+% Blue background =====================================================
+
+\newcommand{\masseySolidBackgroundEx}[2][white]{%
+   \ifthenelse{\equal{#2}{}}%-------------No picture on background ---------------------
+   {
+	\usebackgroundtemplate%
+	 {
+      \tikz \fill[#1] (0,0) rectangle (\paperwidth,\paperheight);	  
+	  \tikz[overlay,remember picture]
+	  \node[at=(current page.south east), anchor=south east,inner sep=5pt]%
+	  {\ifthenelse{\equal{\otherlogofile}{nologo}}{}{\includegraphics[width=\otherlogowidth]{\otherlogofile}}};
+	  \tikz[overlay,remember picture] 
+	  \node[at=(current page.north east), anchor=north east,inner sep=3pt]%
+	  {\ifthenelse{\equal{\mainlogofile}{nologo}}{}{\includegraphics[width=\mainlogowidth]{\mainlogofile}}};
+	  \def\frametitlecolor{masseyBlack}
+	  }
+   }{
+     \usebackgroundtemplate%-------------Picture stretched to fill screen --------------------
+     {%
+     \tikz[overlay,remember picture]
+    \node[opacity=\backgroundfileopacity,at=(current page.south east), anchor=south east,inner sep=0pt]%
+    {\includegraphics[scale=0.01,min size={\paperwidth}{\paperheight}]{#2}};
+    \tikz[overlay,remember picture]
+    \node[at=(current page.south east), anchor=south east,inner sep=5pt]%
+    {\ifthenelse{\equal{\otherlogofile}{nologo}}{}{\includegraphics[width=\otherlogowidth]{\otherlogofile}}};
+    \tikz[overlay,remember picture] 
+    \node[at=(current page.north east), anchor=north east,inner sep=3pt]%
+    {\ifthenelse{\equal{\mainlogofile}{nologo}}{}{\includegraphics[width=\mainlogowidth]{\mainlogofile}}};
+    }
+  }
+}
+
+% White Bar background =====================================================
+
+\newcommand{\masseyWhiteBarBackgroundEx}[2][]{%
+\usebackgroundtemplate%
+{%
+    \tikz[overlay,remember picture] 
+    \node[opacity=\backgroundfileopacity,at=(current page.south east), anchor=south east,inner sep=0pt]%
+    {\includegraphics[scale=0.01,min size={\paperwidth}{\paperheight}]{#2}};
+     \makebox[\textwidth][c]{
+     \tikz \draw[draw=white,fill=white] (0,-0.40) -- (1.2\paperwidth,-0.85) -- (1.2\paperwidth,1.4) -- (0,1.4) -- cycle;}
+    \tikz[overlay,remember picture] 
+    \node[at=(current page.south east), anchor=south east,inner sep=5pt]%
+    {\ifthenelse{\equal{\otherlogofile}{nologo}}{}{\includegraphics[width=\otherlogowidth]{\otherlogofile}}};
+    \tikz[overlay,remember picture] 
+    \node[at=(current page.north east), anchor=north east,inner sep=3pt]%
+    {\ifthenelse{\equal{\mainlogofile}{nologo}}{}{\includegraphics[width=\mainlogowidth]{\mainlogofile}}};
+}
+}
+
+% Old Choose background =====================================================
+% Redundant
+
+\newcommand{\masseySolidBackground}[2][masseyBlue]{%
+\ifthenelse{\equal{#1}{masseyBlue}}
+{
+\def\frametitlecolor{masseyWhite}
+\def\mainlogofile{MasseyLogoBlue}
+\def\otherlogofile{EngineLogoBlue}
+}{
+\def\frametitlecolor{masseyBlue}
+\def\mainlogofile{MasseyLogoWhite}
+\def\otherlogofile{EngineLogoWhite}
+}
+\masseySolidBackgroundEx[#1]{#2}
+}
+
+% Choose Massey Branding  =====================================================
+% Use:
+%\masseyBrand{framedesign}{picture}{masseylogo}{enginelogo}{frametitlecolour}
+%
+% Framedesign:
+%	bar
+%	full (default)
+% Background Picture/Fill
+%	masseyBlueCircles (default)
+%	masseyWhiteCircles
+%	[filename]
+% MasseyLogo:
+%	blueback (default)
+%	whiteback
+%	blueletters
+%	whiteletters
+% EngineLogo:
+%	blueletters
+%	whiteletters  (default)
+% Frame Title colour:
+%	masseyWhite	(default)
+%	[masseyBlue or any recognised colour]
+%
+% Notes:
+% Frame design:
+%	White bar will always select main logo to be whiteback
+%			  must have a pic, default used blue circles
+% Background Picture
+%	The variable used MUST be a filename
+
+\newcommandx{\masseyBrand}[7][1=white,3=1,7=masseyBlue]{%
+%Frame title colour
+%\ifthenelse{\equal{#7}{}}{
+%\def\frametitlecolor{masseyWhite}
+%}{
+\def\backgroundfileopacity{#3}
+\def\frametitlecolor{#7}
+%}
+% Engine Logo
+\def\otherlogofile{nologo}
+\ifthenelse{\equal{#6}{blueletters}}{
+\def\otherlogofile{\otherlogobluelettersfile}
+}{}
+\ifthenelse{\equal{#6}{whiteletters}}{
+\def\otherlogofile{\otherlogowhitelettersfile}
+}{}
+% Massey Main logo
+\def\mainlogofile{nologo}
+\ifthenelse{\equal{#5}{whiteback}}{\def\mainlogofile{\mainlogowhitefile}}{}
+\ifthenelse{\equal{#5}{blueletters}}{\def\mainlogofile{\mainlogobluelettersfile}}{}
+\ifthenelse{\equal{#5}{whiteletters}}{\def\mainlogofile{\mainlogowhitelettersfile}}{}
+% Background selection
+\ifthenelse{\equal{#4}{}}{
+\def\backgroundfilename{}
+}{
+\def\backgroundfilename{#4}
+}
+% White bar or full cover background
+\ifthenelse{\equal{#2}{bar}}{
+\@bartrue
+\def\mainlogofile{\mainlogowhitefile}
+\ifthenelse{\equal{#4}{}}{\def\backgroundfilename{\masseyBlueBackFile}}{}
+\masseyWhiteBarBackgroundEx[#1]{\backgroundfilename}
+}{
+\@barfalse
+\masseySolidBackgroundEx[#1]{\backgroundfilename}
+}
+}
+
+% White title with yellowBanner right
+% The size of the yellow Banner is fixed
+% This link may have a solution for v 0.2a 
+% http://tex.stackexchange.com/questions/160825/modifying-margins-for-one-slide
+
+% Frame Title =====================================================
+
+\setbeamertemplate{frametitle}
+{
+\ifthenelse{\equal{\insertframesubtitle}{}}{\@subfalse}{\@subtrue}
+\color{white}
+\vspace*{45pt}
+\if@sub
+  \setlength{\yellowBannerWidth}{120pt}
+  %\settowidth{\yellowBannerWidth}{\Large\insertframesubtitle}
+  %\settoheight{\yellowBannerHeight}{\Large\insertframesubtitle}
+
+  % Limit min and max sizes of yellowBanner
+%  \ifthenelse{\yellowBannerWidth<\minBannerWidth}
+%  {\setlength{\yellowBannerWidth}{\minBannerWidth}}
+%  {}
+%  \ifthenelse{\yellowBannerWidth>\maxBannerWidth}
+%  {\setlength{\yellowBannerWidth}{\maxBannerWidth}}
+%  {}
+
+  \begin{columns}
+  \column{\dimexpr\paperwidth\relax}
+  \hspace*{\dimexpr \paperwidth - \yellowBannerWidth -4pt \relax}
+  \begin{minipage}[c]{\yellowBannerWidth}
+  \includegraphics[width=\textwidth]{\masseyBannerFile}
+  \end{minipage}
+  \hspace*{-122pt}
+  \raisebox{0.05\baselineskip}{
+  \begin{minipage}[c]{0.9\yellowBannerWidth}
+   \setlength\baselineskip{7pt}
+  \raggedright
+  \ifxetex
+  {\footnotesize \headingsfont\expandafter\MakeUppercase\expandafter\insertframesubtitle}
+  \else
+  {\footnotesize \fontseries{bc}\selectfont \expandafter\MakeUppercase\expandafter\insertframesubtitle}
+  \fi
+  \end{minipage}}
+  \end{columns}
+  \vspace*{-0.7\baselineskip}  
+  
+\else
+  \if@bar
+    \vspace*{0.85\baselineskip}  
+  \else
+    \vspace*{-0.5\baselineskip}  
+  \fi
+\fi
+
+{\color{\frametitlecolor}\expandafter\MakeUppercase\expandafter{\insertframetitle}}
+
+\par
+}
+
+% Optional Closing slide with masseyGold banner ======================================
+
+\newcommand{\masseyClose}[1]{%
+\color{white}
+\null
+\vspace*{-28pt}
+\setlength{\yellowBannerWidth}{255pt}
+\begin{columns}
+  \column{\dimexpr\paperwidth}
+  \hspace*{\dimexpr\paperwidth- \yellowBannerWidth -3pt \relax}
+  \begin{minipage}[c]{\yellowBannerWidth}
+    \includegraphics[width=\yellowBannerWidth]{\masseyBannerFile}
+  \end{minipage}
+  \hspace*{-245pt}
+  \raisebox{0.15\baselineskip}{
+  \begin{minipage}[c]{0.9\yellowBannerWidth}
+    \setlength\baselineskip{10pt}
+    \raggedright
+    \ifxetex
+    {\larger\headingsfont\expandafter\MakeUppercase\expandafter{#1}}
+    \else
+    {\fontseries{bc}\selectfont\larger\expandafter\MakeUppercase\expandafter{#1}}
+    \fi
+  \end{minipage}}
+  \end{columns}
+  \vfill\null
+}
+
+% Optional Title page White bar masseyGold banner ===========================================
+
+\newcommand{\masseyTitlepageOld}{%
+\color{white}
+\null
+\vspace*{-130pt}
+\setlength{\yellowBannerWidth}{255pt}
+\begin{columns}
+  \column{\dimexpr\paperwidth}
+  \hspace*{\dimexpr\paperwidth- \yellowBannerWidth -3pt \relax}
+  \begin{minipage}[c]{\yellowBannerWidth}
+    \includegraphics[width=\linewidth]{YellowBanner}
+  \end{minipage}
+  \hspace*{-245pt}
+  \raisebox{0.15\baselineskip}{
+  \begin{minipage}[c]{0.9\yellowBannerWidth}
+    \setlength\baselineskip{10pt}
+    \raggedright
+    {\bfseries \large \expandafter\MakeUppercase\expandafter{\inserttitle}}\\
+    {\normalsize \expandafter\MakeUppercase\expandafter{\insertshorttitle}}
+  \end{minipage}}
+  \end{columns}  
+ \null
+\color{\frametitlecolor}
+}
+
+\newcommand{\masseyTitlepage}{%
+
+\setlength{\yellowBannerWidth}{255pt}
+\setlength{\yellowBannerHeight}{85pt}
+\vspace*{-28pt}
+
+\begin{minipage}[t][\dimexpr\yellowBannerHeight\relax][t]{\dimexpr\paperwidth\relax}
+  %\raggedleft
+  \hfill
+  \begin{minipage}[c]{\yellowBannerWidth}
+    \includegraphics[width=\yellowBannerWidth]{\masseyBannerFile}
+  \end{minipage}
+  \hspace*{-0.96\yellowBannerWidth}
+  \raisebox{0.15\baselineskip}{
+  \begin{minipage}[c]{0.9\yellowBannerWidth}
+    \setlength\baselineskip{10pt}
+    \raggedright
+    \color{white}
+    \ifxetex
+      {\larger\headingsfont\expandafter\MakeUppercase\expandafter\inserttitle}\\
+      {\color{masseyGold!50!white} \subheadingsfont\expandafter\MakeUppercase\expandafter\mSupplementTitle}
+    \else
+      {\larger \fontseries{bc}\selectfont \expandafter\MakeUppercase\expandafter\inserttitle}\\
+      {\color{masseyGold!50!white} \fontseries{bc}\selectfont\expandafter\MakeUppercase\expandafter\mSupplementTitle}
+    \fi
+    
+  \end{minipage}}
+~~~~~~~~~\null
+\end{minipage}
+
+%\color{white}
+%\null
+%\vspace*{-130pt}
+%\setlength{\yellowBannerWidth}{255pt}
+%\begin{columns}
+%  \column{\dimexpr\paperwidth}
+%  \hspace*{\dimexpr\paperwidth- \yellowBannerWidth -3pt \relax}
+%  \begin{minipage}[c]{\yellowBannerWidth}
+%    \includegraphics[width=\linewidth]{YellowBanner}
+%  \end{minipage}
+%  \hspace*{-245pt}
+%  \raisebox{0.15\baselineskip}{
+%  \begin{minipage}[c]{0.9\yellowBannerWidth}
+%    \setlength\baselineskip{10pt}
+%    \raggedright
+%    {\bfseries \large \expandafter\MakeUppercase\expandafter{\inserttitle}}\\
+%    {\normalsize \expandafter\MakeUppercase\expandafter{\insertshorttitle}}
+%  \end{minipage}}
+%  \end{columns}  
+% \null
+%\color{\frametitlecolor}
+}
+
+
+% Clipped circles with optional text =====================================================
+% Circle with clipped image, overwritten with text
+% Options: imagesize(mm), image, textsize,text
+\newcommandx{\circlepictext}[5][1=1]{%
+\tikz\node[opacity=#1,circle,draw,color=masseyBlue,
+           text=white,           
+           path picture={
+               \node at (path picture bounding box.center){
+                   \includegraphics[width= #2 mm]{#3}
+               };
+           }]{
+           \begin{minipage}[c][#4 mm]{#4 mm}
+           #5
+           \end{minipage}};
+}
+
+% Define headline ====================================================================
+\defbeamertemplate{headline}{forusewithmasseytemplate}{%
+\vskip2pt
+\hspace*{1ex}
+\makebox[0pt][l]{\,\masseyheadl}%
+\hspace*{\fill}\masseyheadc\hspace*{\fill}%
+}
+
+% Define footline ====================================================================
+\defbeamertemplate{footline}{page numbers}
+{%
+  \hspace*{1ex}%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertpagenumber\,/\,\insertpresentationendpage%
+  \hspace*{\fill}\vskip2pt%
+}
+
+% Experimental frame  =====================================================
+% does not work
+
+\newenvironment{yellowframe}%
+ {
+ %Useful for blocks:
+ %\addtobeamertemplate{frame begin}{\pgfsetfillopacity{0.5}}{\pgfsetfillopacity{1}}
+ \begin{frame}
+ }
+ {
+  \end{frame}
+ }
+
+\mode<all>
+
+% Set initial values
+%\masseySolidBackground
+%\masseyWhiteBarBackground

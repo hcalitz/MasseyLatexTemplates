@@ -1,0 +1,109 @@
+\documentclass[11pt]{IFSCommunication}
+
+\begin{document}
+
+% "Global" variables.  Used in Letters, Memo and Minutes
+
+\senderTitle{Prof.}   
+% This variable can be re-used in the document by specifying "\IFStitle"
+% the same format is used for all variables specified. 
+\senderName{Albus Dumbledore}  %\IFSname
+\senderRole{Chair of Wizardry}  %\IFSrole
+\senderDept{}  %\IFSdept
+\senderUnit{Institute of Fundamental Sciences}  %\IFSunit
+\senderAddressOne{Massey University}  %\IFSaddressOne
+\senderAddressTwo{Private Bag 11222}  %\IFSaddressTwo
+\senderAddressThree{Palmerston North}  %\IFSaddressThree
+\senderCountry{New Zealand} %\IFScountry 
+\senderTelephone{+64 6 356 9099} %\IFStelephone
+\senderExtention{X1234}  %\IFSextention
+\senderFax*{+64 6 356 9099} %\IFSfax Starred version not included in footer
+\senderEmail*{A.dumb@massey.ac.nz} %\IFSemail Starred version not included in footer
+\senderWww*{http://www.massey.ac.nz/} %\IFSwww Starred version not included in footer
+\letterTo{
+Mr Harry Potter\\
+4 Privet Drive\\
+Glouchester\\
+4412
+} % name and address to be added under date on the left
+
+\signletter{yes}  
+% Will add a file named "sig" (jpg/png) containing your signature if "yes"
+% specify other file with optional parameter e.g.
+%\signletter[ndplume]{yes}  
+
+\addfilename[WizardKids/]{yes}
+% Add the filename of the current file at top right of the document if "yes".
+% The path can be specified with optional parameter as above or without e.g.
+%\addfilename{yes}
+
+% Letter -----------------------------------------------------------------------
+
+\letter[Confidential]
+
+Dear Harry
+
+If it is convenient to you, I shall call at number four, Privet Drive this coming Friday at eleven P.M. to escort you to the Burrow, where you have been invited to spend the remainder of your school holidays.
+
+If you are agreeable, I should also be glad of your assistance in a matter to which I hope to attend on the way to the Burrow. I shall explain this more fully when I see you.
+
+Kindly send your answer by return of this owl. Hoping to see you this Friday,
+
+\closing{I am, yours most sincerely,}
+
+%\end{letter}
+\clearpage
+
+% Memo -----------------------------------------------------------------------
+
+\memoTo{} %\IFSmemoto
+\memoFrom{} %\IFSmemofrom (will use \IFStitle\IFSName,\IFSrole if left empty)
+\memoCC{} % \IFSmemocc
+\memoSubject{} % \IFSmemosubject
+
+\addfilename{no}
+
+\memo[Please see me]
+
+If it is convenient to you, I shall call at number four, Privet Drive this coming Friday at eleven P.M. to escort you to the Burrow, where you have been invited to spend the remainder of your school holidays.
+
+If you are agreeable, I should also be glad of your assistance in a matter to which I hope to attend on the way to the Burrow. I shall explain this more fully when I see you.
+
+Kindly send your answer by return of this owl. Hoping to see you this Friday,
+
+\clearpage
+
+% Meeting Minutes -----------------------------------------------------------------------
+
+\meetingDate{Thursday 2 April 2015}  %\IFSmeetdate
+\meetingTime{9.00 am}  % \IFSmeettime
+\meetingPlace{Room ScB3.31}  %\IFSmeetplace
+\meetingGroup{Institute of Fundamental Sciences\\
+Flight and Bioresponse Group} %\IFSmeetgroup
+\meetingPresent{Prof A Dumbledore (Chair), Prof M McGonagall, Mr R Hagrid, Prof~Q~Quirrell, 
+	A/Prof G Flitwick, Mr. Ollivander, Mrs P Dursley, Dr~S Snape} % \IFSmeetpresent
+\meetingAbsent{Mr D Malfoy, Mr.F Weasley, Mr. G Weasley.} %\IFSmeetabsent
+\meetingAttendance{Ms. H Granger} %\IFSmeetattendance
+\addfilename[Massey/MEETING/]{yes} 
+
+\meeting
+
+\begin{enumerate}
+
+\item Welcome\\
+	Professor Dumbledore welcomed Ron Weasley and Harry Potter, Graduate Assistants in Wizardy, to their first meeting.
+
+\item Minutes of Previous Meeting held on 5 March 2015	(BioResGM15/04)\\
+
+	The minutes of the previous meeting were accepted as a true and accurate record.\\
+	\hfill Moved: Chair\\
+	\hfill Seconded:  All
+\item Matters Arising \\
+	Review of Curriculum (Item 4.2)\\
+	The report on the review of the degree has been released.  Its content is similar to that reported in the previous meeting.  The paper 115.101 is no longer a core paper but is still a requirement in some of the Flight Studies’ Majors.  This may result in a drop in student numbers of around 30\%.  
+
+\end{enumerate}
+
+\hfill{The meeting closed at 9.25 am}\hfill\null
+
+\end{document}

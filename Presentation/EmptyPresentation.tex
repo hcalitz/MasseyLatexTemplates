@@ -1,0 +1,82 @@
+% Choose between 4:3 aspect ratio or 16:9
+%\documentclass[10pt]{beamer}
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+
+\mode<presentation> {
+\usetheme{Massey}
+%\usecolortheme{DarkLetters}
+\usecolortheme{LightLetters}
+% Specify logo folder if different from default
+%\def\logoFolder{uniLogo}
+
+% Now load other modules
+\usefonttheme{professionalfonts}
+% To get running page numbers in all slides uncomment this line
+%\setbeamertemplate{footline}[page numbers] 
+% To get a header in all slides uncomment this line
+%\headlinecontent{Text left top corner}{Text top center}
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{Your title} 
+\suptitle{Support title}
+\author{Your name}
+\department{Your Department}
+\institute{Your Institute}
+\contact{Your email}
+\date{\nztoday}
+
+%=================================================  START DOCUMENT ======================================
+
+\begin{document}
+
+% Default values for the Massey branding will be used
+% \masseyBrand[fillcolour]{framedesign}[opacity]{picture}{masseylogo}{enginelogo}[frametitlecolour]
+\masseyBrand{}{}{}{}
+
+% Massey styled title -------------------------------------------------------------------------
+
+%\masseyBrand{bar}{picturefilename}{blueletters}{blueletters}{}
+
+\begin{frame}[t]  % The [t] is important!!!!
+\masseyTitlepage % Print the title page 
+
+\raggedleft
+\begin{mblock}[180pt]{0.7}{}
+\raggedleft
+\textbf{\insertauthor}\\
+\insertdepartment\\
+\insertinstitute\\
+\insertcontact\\
+\insertdate
+\end{mblock}
+\vfill
+\end{frame}
+
+% Slides ---------------------------------------------------------------------------------
+
+% Change background if needed
+%\masseyBrand[fillcolour]{full/bar}[opacity]{picture}{blueletters/whiteletters}{blueletters/whiteletters}[frametitlecolour]
+\masseyBrand{}{}{}{}
+
+\begin{frame}{Frame title}{subtitle}
+%\frametitle{}
+%\framesubtitle{}
+%\circlepictext{picturesize}{image}{textwidth}{text}
+%\begin{mblock}[width]{opacity}{title} ... \end{mblock}
+%\begin{picblock}[width]{opacity}{title}{picture}...\end{picblock}
+%\begin{mexample}[width]{opacity}{title} ... \end{mexample}
+%\begin{malert}[width]{opacity}{title} ... \end{malert}
+\end{frame}
+
+% Closing ------------------------------------------------------------------------------------
+
+\begin{frame}[plain]
+%\masseyClose{}
+\end{frame}
+
+\end{document} 

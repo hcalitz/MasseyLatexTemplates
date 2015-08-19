@@ -1,0 +1,594 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Template Demonstration
+% Version 0.1 (22/05/2015)
+%
+% Author
+% JJ Calitz
+%
+% Please forward any suggestions and/or improvements to the author at
+% j.calitz@massey.ac.nz 
+% so that an up to date and useful template can be maintained.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Choose between 4:3 aspect ratio or 16:9
+%\documentclass[10pt]{beamer}
+\documentclass[10pt,aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+
+\mode<presentation> {
+
+% Load the Massey style files in this order!
+\usetheme{Massey}
+
+% Choose between the MasseyWhite or MasseyBlue colortheme
+%\usecolortheme{DarkLetters}
+\usecolortheme{LightLetters}
+
+% Specify logo folder if different from default
+%\def\logoFolder{uniLogo}
+
+% Now load other modules
+\usefonttheme{professionalfonts}
+
+% To remove the running page numbers in all slides uncomment this line
+% \begin{frame}[plain] 
+% will suppress footline and headline content
+\setbeamertemplate{footline}[page numbers] 
+
+% This command can be used anywhere in the document
+% \begin{frame}[plain] 
+% will suppress footline and headline content
+\headlinecontent{Text left top corner}{Text top center}
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\masseyBrand{}{}{}{}{}
+
+\title[Short title not used by massey template]{Presentation title} 
+% **NEW** Supporting title 
+% Will show in yellow banner on title frame
+\suptitle{Support title}
+
+% These values can used by you in the document
+% \insertauthor
+%\insertdepartment
+%\insertinstitute
+%\insertcontact
+%\insertdate
+\author{Presenter Name}
+% **NEW**
+\department{Research Support}
+\institute{Institute of Fundamental Science}
+\contact{\textit{j.doe@massey.ac.nz}}
+%**NEW** macro \nztoday writes today's date in day-month-year format
+\date{\nztoday}
+
+%=================================================  START DOCUMENT ======================================
+
+\begin{document}
+
+\masseyBrand{}{}{}{}{}
+
+\begin{frame}[fragile]{}{Overview of Template}
+\setlength\parskip{2ex}
+\vspace*{-13ex}
+Preamble:
+
+~~~~\verb|\usetheme{Massey}|\\
+~~~~\verb|\usecolortheme{DarkLetters}|\\
+~~~~\verb|\usecolortheme{LightLetters}|\\
+~~~~\verb|\setbeamertemplate{footline}[page numbers]|\\
+~~~~\verb|\headlinecontent{left}{center}|
+
+It provides new commands:
+
+\footnotesize
+~~~~\verb|\suptitle{Support Title}|\\
+~~~~\verb|\department{Department}|\\
+~~~~\verb|\masseyTitlepage|\\
+~~~~\verb|\masseyClose{Some text}|\\
+~~~~\verb|\masseyBrand[fillcolour]{framedesign}[opacity]{picture}{masseylogo}{enginelogo}[frametitlecolour]|\\
+~~~~\verb|\circlepictext{picturesize}{image}{textwidth}{text}|\\
+~~~~\verb|\begin{mblock}[width]{opacity}{title} ... \end{mblock}|\\
+~~~~\verb|\begin{picblock}[width]{opacity}{title}{picture}...\end{picblock}|\\
+~~~~\verb|\begin{mexample}[width]{opacity}{title} ... \end{mexample}|\\
+~~~~\verb|\begin{malert}[width]{opacity}{title} ... \end{malert}|\\
+
+\vspace{3ex}
+\color{masseyRuapehu}
+By changing the colour of the headers, logos, background and frame layout individually,\\ a \textsl{huge} array of presentation styles are possible.
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+MUST have these packages installed: $\left\{
+\begin{tabular}{l}
+color\\
+graphicx\\
+tikz\\
+xargs\\
+ifthen\\
+xspace\\
+relsize\\
+tcolorbox\\
+helvet\\
+adjustbox\\
+etoolbox\\
+\end{tabular}\right.$
+\vfill
+Of course full functionality of those packages are then available as well.
+\vfill\null
+\end{frame}
+
+
+% Background demonstration -----------------------------------------------------------------------
+
+% Default values for the Massey branding will be used
+% \masseyBrand[fillcolour]{framedesign}{picture}{masseylogo}{enginelogo}{frametitlecolour}
+\masseyBrand{}{}{}{}
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+Pre-set values for the masseyBrand command:
+{\footnotesize
+\begin{verbatim}
+\masseyBrand[Optional:anyExistingColour]
+            {bar/full (default=full)}
+            [Optional:0 <= opacityvalue <= 1, default(1)]
+            {anyPictureFileOnDisc}
+            {blueletters/whiteletters/whiteback/empty}
+            {blueletters/whiteletters/empty}
+            [Optional:anyExistingColour]
+\end{verbatim}
+}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+Default values for the Massey branding will be used\\[2ex]
+{\footnotesize
+\verb|\masseyBrand[fillcolour]{framedesign}{picture}{masseylogo}{enginelogo}{frametitlecolour}|}
+
+\verb|\masseyBrand{}{}{}{}|
+\end{frame}
+
+% Use a solid colour background 
+\masseyBrand[masseyTasman]{}{}{}{}
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+Use a solid colour background \\[2ex]
+\verb|\masseyBrand[masseyTasman]{}{}{}{}|
+
+\end{frame}
+
+%White bar will have MasseyBlueCircles as default for background
+\masseyBrand{bar}{}{}{}
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+White bar will have MasseyBlueCircles as default for the background.\\
+Massey blue letter logo at top\\[2ex]
+\verb|\masseyBrand{bar}{}{}{}|
+\end{frame}
+
+% Use a white bar on picture background
+\masseyBrand{bar}{lab3}{}{}
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+Use a white bar on picture background\\[2ex]
+\verb|\masseyBrand{bar}{lab3}{}{}|
+\end{frame}
+
+% Use a full picture background
+\masseyBrand{}{lab3}{}{}
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+Use a full picture background\\[2ex]
+\verb|\masseyBrand{}{lab3}{}{}|
+\end{frame}
+
+% Use a full picture background with blue letter logos
+\masseyBrand{}{lab2}{blueletters}{blueletters}
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+Use a full picture background with blue letter logos\\[2ex]
+\verb|\masseyBrand{}{lab2}{blueletters}{blueletters}|
+\end{frame}
+
+% Use a full picture background with blue letter logos and masseyVolcano coloured title 
+\masseyBrand{}{lab2}{blueletters}{blueletters}[masseyVolcano]
+
+\begin{frame}[fragile]
+\frametitle{Background Control}
+Use a full picture background with blue letter logos and masseyVolcano coloured title \\[2ex]
+\verb|\masseyBrand{}{lab2}{blueletters}{blueletters}[masseyVolcano]|
+
+\end{frame}
+
+% Use a full picture background with blue letter logos and masseyVolcano coloured title 
+% and remove the headline and footline
+\masseyBrand{}{lab2}{blueletters}{blueletters}[masseyVolcano]
+
+\begin{frame}[fragile,plain]
+\frametitle{Background Control}
+Use a full picture background with blue letter logos and masseyVolcano coloured title \\
+and remove the headline and footline\\[2ex]
+\verb|\masseyBrand{}{lab2}{blueletters}{blueletters}[masseyVolcano]|
+\end{frame}
+
+% Use a full picture background with blue letter logos and masseyVolcano coloured title 
+% and remove the headline and footline
+\masseyBrand{}[0.4]{lab2}{blueletters}{blueletters}[masseyVolcano]
+
+\begin{frame}[fragile,plain]
+\frametitle{Background Control}
+\color{black}
+Use an opaque (\backgroundfileopacity) full picture background \\with blue letter logos \\masseyVolcano coloured title \\
+and remove the headline and footline\\[2ex]
+\verb|\masseyBrand{}[0.4]{lab2}{blueletters}{blueletters}[masseyVolcano]|
+\end{frame}
+
+
+% Massey styled title -------------------------------------------------------------------------
+
+\masseyBrand{bar}{lab2}{blueletters}{blueletters}
+
+\begin{frame}[t]
+\masseyTitlepage % Print the title page as the first slide
+
+\raggedleft
+\begin{mblock}[180pt]{0.7}{}
+\raggedleft
+\textbf{\insertauthor}\\
+\insertdepartment\\
+\insertinstitute\\
+\insertcontact\\
+\insertdate
+\end{mblock}
+\vfill
+\end{frame}
+
+% Choose plain, undistracting background 
+\masseyBrand{}{}{}{}
+
+\begin{frame}[fragile]
+Title page done this way:
+\begin{verbatim}
+\masseyBrand{bar}{lab2}{blueletters}{blueletters}
+
+\masseyTitlepage % Print the title page as the first slide
+\raggedleft
+\begin{mblock}[180pt]{0.7}{}
+\raggedleft
+\textbf{\insertauthor}\\
+\insertdepartment\\
+\insertinstitute\\
+\insertcontact\\
+\insertdate
+\end{mblock}
+\vfill
+
+\end{verbatim}
+
+\end{frame}
+
+% Headings ------------------------------------------------------------------------------------
+
+% Choose plain, undistracting background 
+\masseyBrand{}{}{}{}
+
+
+\begin{frame}[plain,fragile]
+\frametitle{Frame title}
+\framesubtitle{And some subtitle space}
+
+\verb|\frametitle{Frame title}|\\
+\verb|\framesubtitle{And some subtitle space}|
+\end{frame}
+
+\begin{frame}[plain,fragile]
+\frametitle{Longer Frame title\newline \smaller with smaller second line}
+\framesubtitle{And some longer subtitle space too}
+
+\verb|\frametitle{Longer Frame title\newline \smaller with smaller second line}|\\
+\verb|\framesubtitle{And some longer subtitle space too}|
+\end{frame}
+
+% Standard Colours and backgrounds --------------------------------------------------------------------------------
+
+\masseyBrand[white]{}{}{blueletters}{blueletters}[masseyGold]
+
+\begin{frame}
+\frametitle{Good looking logos and\newline corporate colours}
+
+\scriptsize
+\color{black}
+
+\begin{tabular}{ccccc}
+\multicolumn{5}{c}{\normalsize Main Colours}\\[1ex]
+\multicolumn{5}{c}{
+\normalsize
+\color{white}
+\colorbox{masseyBlue}{masseyBlue}
+\colorbox{masseyGold}{masseyGold}
+\colorbox{masseyBlack}{masseyBlack}}\\[3ex]
+\multicolumn{5}{c}{\normalsize Secondary Colours}\\[1ex]
+\color{black}
+\colorbox{masseyWhite}{~masseyWhite~}&
+\color{white}
+\colorbox{masseyRangipo}{masseyRangipo}&
+\colorbox{masseyTui}{\,~~masseyTui~~~}&
+\colorbox{masseyPonga}{masseyPonga}&
+\colorbox{masseyRuapehu}{masseyRuapehu}\\[3ex]
+\colorbox{masseyVolcano}{masseyVolcano}&
+\colorbox{masseyKamaka}{masseyKamaka}&
+\colorbox{masseyTasman}{masseyTasman}&
+\colorbox{masseyKuku}{masseyKuku~}&
+\colorbox{masseyOneone}{masseyOneone~}\\[3ex]
+\end{tabular}
+\vfill
+\end{frame}
+
+\masseyBrand[masseyTasman]{}{}{whiteletters}{whiteletters}
+
+\begin{frame}
+\color{masseyGold}
+\vspace*{-5ex}
+\footnotesize
+\begin{center}
+\begin{tabular}{cccc}
+\includegraphics[width=0.2\textwidth]{uniLogo/MasseyLogoWhite}&
+\includegraphics[width=0.2\textwidth]{uniLogo/MasseyLogoBlueLetters}&
+\includegraphics[width=0.2\textwidth]{uniLogo/EngineLogoBlueLetters}&
+\includegraphics[width=0.2\textwidth]{\masseyBlueCircles}\\
+MasseyLogoWhite & MasseyLogoBlueLetters& EngineLogoBlueLetters &
+masseyBlueCircles \\
+&&&(\textbackslash masseyBlueCircles)\\&&&\\
+&
+\includegraphics[width=0.2\textwidth]{uniLogo/MasseyLogoWhiteLetters}&
+\includegraphics[width=0.2\textwidth]{uniLogo/EngineLogoWhiteLetters}&
+\includegraphics[width=0.2\textwidth]{\masseyWhiteCircles}\\
+& MasseyLogoWhiteLetters& EngineLogoWhiteLetters &
+masseyWhiteCircles \\&&&(\textbackslash masseyWhiteCircles)\\
+\end{tabular}
+\end{center}
+\end{frame}
+
+% Boxes -----------------------------------------------------------------------------
+
+\masseyBrand[white]{}{lab1}{blueletters}{blueletters}[masseyGold]
+
+\begin{frame}[fragile]
+
+%\frametitle{~}
+\framesubtitle{Added functionality multi-function block}
+
+\vspace*{-3ex}
+\color{black}
+\footnotesize
+\verb|\begin{mblock}[width]{opacity}{heading}|\\
+\hspace*{2em}:\\[1ex]
+\verb|\end{mblock}|\\
+\tiny
+\begin{tabular}{p{0.4\textwidth}@{\hspace*{0.5cm}}p{0.4\textwidth}}
+
+\begin{mblock}{1}{Heading}
+\verb|\begin{mblock}{1}{Heading}|
+$\cdots$\verb|\end{mblock}|
+\end{mblock}
+
+\begin{mblock}{0.7}{}
+\verb|\begin{mblock}{0.7}{}|
+$\cdots$\verb|\end{mblock}|
+\end{mblock}
+
+\begin{mblock}{0.3}{Heading}
+\verb|\begin{mblock}{0.3}{Heading}|
+$\cdots$\verb|\end{mblock}|
+\end{mblock}
+
+\begin{mblock}{0}{}
+\verb|\begin{mblock}{0}{}|
+$\cdots$\verb|\end{mblock}|
+\end{mblock}
+
+& 
+
+\begin{mblock}{1}{Mass--energy equivalence}{
+%\setbeamercolor{itemize/enumerate body}{fg=black}
+Use the \textsl{mblock} environment for:
+\begin{itemize}
+\item Inline maths: $E = mc^2$\\
+\item Paragraph style maths \[E = mc^2\]
+\item Verbatim \verb|\LaTeX| code.
+\item Software listing
+\begin{verbatim}
+\begin{itemize}
+\item Inline maths: $E = mc^2$\\
+\item Paragraph style maths \[E = mc^2\]
+\item Verbatim \verb|\LaTeX| code.
+\end{itemize}
+\end{verbatim}
+\end{itemize}
+}
+\end{mblock}
+\end{tabular}
+\end{frame}
+
+%------------------------------------------------
+
+\masseyBrand[white]{}{lab2}{blueletters}{blueletters}[masseyGold]
+\begin{frame}[fragile]
+%\frametitle{~}
+\framesubtitle{Added functionality picture block}
+
+\vspace*{-2ex}
+
+\footnotesize
+\def\picname{lab1}
+
+\begin{picblock}[0.8\textwidth]{1}{Some Picture}{\picname}
+
+\color{masseyBlack}
+
+Place pictures in block with text.  Picture will maintain aspect ratio, but expand to fill whole block.\\
+
+\verb|\begin{picblock}[width]{opacity}{heading}{picture}|\\
+\hspace*{2em}:\\[1ex]
+\verb|\end{picblock}|\\
+
+\verb|\begin{picblock}[0.8\textwidth]{0.8}{Some Picture}{lab1}|
+$\cdots$\verb|\end{picblock}|
+\end{picblock}
+\end{frame}
+
+%------------------------------------------------
+
+
+\begin{frame}[fragile]
+%\frametitle{~}
+\framesubtitle{Added functionality Alerts \& examples}
+\begin{malert}[0.5\textwidth]{1}{malert block}
+$E = mc^2$
+\end{malert}
+
+\begin{mexample}[0.8\textwidth]{1}{mexample block}
+\begin{verbatim}
+\begin{frame}
+\frametitle{Theorem}
+\begin{theorem}[Mass--energy equivalence]
+$E = mc^2$
+\end{theorem}
+\end{frame}\end{verbatim}
+\end{mexample}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+%\frametitle{~}
+\framesubtitle{Added functionality clipped pictures}
+
+\begin{picture}(300,200)
+\put(230,0){\circlepictext[0.8]{70}{lab1}{25}{\color{black}\centering pic 70\\text 25\\at 230,0}}
+\put(-80,90){\circlepictext[0.6]{190}{lab4}{85}{\color{black}\centering pic 190\\text 85\\at -80,90}}
+\put(120,50){\circlepictext[0.8]{70}{tux}{35}{\color{masseyVolcano} Clipped pictures in circles with text to mirror the secondary logo design. Be creative in the picture environment! (This frame @ 120,50)}}
+\put(-20,30){\color{masseyWhite}\textbackslash circlepictext[opacity]\{picturewidth\}\{picture\}\{textwidth\}\{text\}}
+\end{picture}
+
+\end{frame}
+
+%------------------------------------------------
+\headlinecontent{}{Back again}
+
+\begin{frame}
+\frametitle{Comparing blocks}
+\begin{columns}
+\column{.4\textwidth}
+\begin{block}{Beamer Block 1}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. 
+\end{block}
+
+\begin{example}[Beamer Block 2]
+Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+\end{example}
+\column{.45\textwidth}
+\begin{mblock}{1}{mblock 100\% opacity}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. 
+\end{mblock}
+
+\begin{mexample}{0.5}{mexample 50\% opacity}
+Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+\end{mexample}
+\end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Multiple Columns}
+%\framesubtitle{frame subtitle text}
+%\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+%
+%\column{.45\textwidth} % Left column and width
+%\textbf{Heading}
+%\begin{enumerate}
+%\item Statement
+%\item Explanation
+%\item Example
+%\end{enumerate}
+%
+%\column{.5\textwidth} % Right column and width
+%Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
+%
+%\end{columns}
+%\end{frame}
+
+%------------------------------------------------
+\section{Second Section}
+%------------------------------------------------
+
+%\begin{frame}
+%\frametitle{Table}
+%\begin{table}
+%\begin{tabular}{l l l}
+%\toprule
+%\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+%\midrule
+%Treatment 1 & 0.0003262 & 0.562 \\
+%Treatment 2 & 0.0015681 & 0.910 \\
+%Treatment 3 & 0.0009271 & 0.296 \\
+%\bottomrule
+%\end{tabular}
+%\caption{Table caption}
+%\end{table}
+%\end{frame}
+
+
+
+%------------------------------------------------
+
+
+%\begin{frame}
+%\frametitle{Figures}
+%\begin{figure}
+%\includegraphics[width=0.8\linewidth]{lab2}
+%\end{figure}
+%\end{frame}
+
+%------------------------------------------------
+\masseyBrand{full}{lab2}{whiteback}{whiteletters}[masseyVolcano]
+
+\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
+\framesubtitle{tips}
+\setlength{\parskip}{\baselineskip}
+
+Presentations can be done in  16:9 ratios, which look much better.\\
+\verb|\documentclass[10pt,aspectratio=169]{beamer}|
+
+Must have \verb|\usepackage[T1]{fontenc}| in preamble for fonts to render correct.
+
+Start frames with \verb|\begin{frame}[fragile]| to include verbatim text.
+
+Be careful when using distracting backgrounds. 
+
+\end{frame}
+%------------------------------------------------
+
+\begin{frame}[plain]
+\masseyClose{Go make a killer presentation!}
+\end{frame}
+
+
+
+\end{document} 
